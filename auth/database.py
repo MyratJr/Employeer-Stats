@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 from sqlalchemy.orm import sessionmaker
 from config import*
-from models import roles
+from models import role
 
 DATABASE_URL = f"postgresql+asyncpg://%{DB_USER}s:%{DB_PASS}s@%{DB_HOST}s:%{DB_PORT}s/%{DB_NAME}s"
 Base: DeclarativeMeta = declarative_base()
@@ -18,7 +18,7 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     email=Column(String, nullable=False),
     username=Column(String, nullable=False),
     registered_at=Column(TIMESTAMP, default=datetime.utcnow),
-    role_id=Column(Integer, ForeignKey(roles.c.id)),
+    role_id=Column(Integer, ForeignKey(role.id)),
     hashed_password: str = Column(String(length=1024), nullable=False)
     is_active: bool =Column(Boolean, default=True, nullable=False)
     is_superuser: bool = Column(Boolean, default=False, nullable=False)
@@ -27,11 +27,6 @@ class User(SQLAlchemyBaseUserTable[int], Base):
 
 engine = create_async_engine(DATABASE_URL)
 async_session_maker = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
-
-
-async def create_db_and_tables():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
 
 
 async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
