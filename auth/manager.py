@@ -2,16 +2,15 @@ from typing import Optional
 
 from fastapi import Depends, Request
 from fastapi_users import BaseUserManager,IntegerIDMixin, exceptions, models, schemas
+from config import SECRET_AUTH
+from models import user
+from .utils import get_user_db 
 
-from .database import User, get_user_db
+class UserManager(IntegerIDMixin, BaseUserManager[user, int]):
+    reset_password_token_secret = SECRET_AUTH
+    verification_token_secret = SECRET_AUTH
 
-SECRET = "SECRET"
-
-class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
-    reset_password_token_secret = SECRET
-    verification_token_secret = SECRET
-
-    async def on_after_register(self, user: User, request: Optional[Request] = None):
+    async def on_after_register(self, user: user, request: Optional[Request] = None):
         print(f"User {user.id} has registered.")
 
     async def create(
