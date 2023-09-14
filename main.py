@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from auth.base_config import auth_backend, fastapi_users
 from auth.schemas import UserRead, UserCreate
 from operations.router import router as router_operations
+from tasks.router import router
 
 app=FastAPI(title="Trading app")
 
@@ -19,3 +20,4 @@ app.include_router(
 )
 
 app.include_router(router_operations)
+app.include_router(router)
