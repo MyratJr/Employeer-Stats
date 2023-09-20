@@ -24,19 +24,12 @@ app.include_router(router_operations)
 app.include_router(router)
 
 
-origins = [
-    "http://localhost:3000",
-    "https://amazon.com"
-]
+# origins = [
+#     "http://localhost:3000",
+#     "https://amazon.com"
+# ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["GET","POST","OPTIONS","DELETE", "PATCH", "PUT"],
-    # allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Authorization"],
-    allow_headers=["*"]
-)
+
 
 
 @app.get("/")
