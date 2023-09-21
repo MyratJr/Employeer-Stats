@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script>
+    const searchForOperation=()=>{
+        const searchInputValue=document.getElementById("operation_search").value;
+        window.location.href='/pages/home/${searchInputValue}';
+    }
+    </script>
+{% endblock %}
+
+{% block content %}
+<div>
+    <div>
+        <input id="operation_search" type="text", placeholder="Tip operasii">
+        <button onclick="searchForOperation()">Poisk po operaasi</button>
+    </div>
+    <span>meselem salam ssskn dfn hfbshfj ghjfhgjksdh gjkhsjk ghjksd </span>
+        <div>
+            <div>
+            <span>{{ i.type }}</span>
+            <span>{{ i.date }}</span>
+            <span>{{ i.quantity }}</span>
+            <span>{{ i.figi }}</span>
+            </div>
+        </div>
+</div>
+{% endblock %}
